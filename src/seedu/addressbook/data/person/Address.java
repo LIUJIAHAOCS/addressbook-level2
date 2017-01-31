@@ -8,13 +8,20 @@ import seedu.addressbook.data.exception.IllegalValueException;
  */
 public class Address {
 
-    public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
+    public static final String EXAMPLE = "123, Clementi Ave 3, #12-34, 231534";
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses must follow the format: a/BLOCK, STREET, UNIT, POSTAL_CODE";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
 
     public final String value;
     private boolean isPrivate;
-
+    
+    private final String SPILT_SIGN = ", ";
+    private final int BLOCK_INDEX = 0;
+    private final int STREET_INDEX = 1;
+    private final int UNIT_INDEX = 2;
+    private final int POSTAL_CODE_INDEX = 3;
+    private final String COMMA = ", ";
+    
     /**
      * Validates given address.
      *
@@ -26,9 +33,65 @@ public class Address {
         if (!isValidAddress(trimmedAddress)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = trimmedAddress;
+        
+        String[] addressComponents = trimmedAddress.split(", ");
+       
+        Block block = new Block(Integer.parseInt(addressComponents[BLOCK_INDEX]));
+        Street street = new Street(addressComponents[STREET_INDEX]);
+        Unit unit = new Unit(addressComponents[UNIT_INDEX]);
+        PostalCode postal = new PostalCode(Integer.parseInt(addressComponents[POSTAL_CODE_INDEX]));
+        
+        this.value = block.getBlockNo() + COMMA + street.getStreetName() + COMMA
+        			 + unit.getUnitNo() + COMMA + postal.getPostalCode();
     }
-
+    
+    private class Block {
+    	private int blockNo;
+    	
+    	public Block(int block) {
+    		this.blockNo = block;
+    	}
+    	
+    	public int getBlockNo() {
+    		return this.blockNo;
+    	}
+    }
+    
+    private class Street {
+    	private String streetName;
+    	
+    	public Street(String street) {
+    		this.streetName = street;
+    	}
+    	
+    	public String getStreetName() {
+    		return this.streetName;
+    	}
+    }
+    
+    private class Unit {
+    	private String unitNo;
+    	
+    	public Unit(String unit) {
+    		this.unitNo = unit;
+    	}
+    	
+    	public String getUnitNo(){
+    		return this.unitNo;
+    	}
+    }
+    
+    private class PostalCode {
+    	private int postalCodeNo;
+    	
+    	public PostalCode(int postalCode) {
+    		this.postalCodeNo = postalCode;
+    	}
+    	
+    	public int getPostalCode() {
+    		return this.postalCodeNo;
+    	}
+    }
     /**
      * Returns true if a given string is a valid person email.
      */
