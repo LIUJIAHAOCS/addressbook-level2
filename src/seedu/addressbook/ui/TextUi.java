@@ -74,7 +74,6 @@ public class TextUi {
         return fullInputLine;
     }
 
-
     public void showWelcomeMessage(String version, String storageFilePath) {
         showToUser(Formatter.formatWelcomeMessage(version, storageFilePath));
     }
@@ -82,7 +81,6 @@ public class TextUi {
     public void showGoodbyeMessage() {
         showToUser(Formatter.formatGoodbyeMessage());
     }
-
 
     public void showInitFailedMessage() {
         showToUser(Formatter.formatInitFailedMessage());
