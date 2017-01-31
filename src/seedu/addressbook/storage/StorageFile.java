@@ -17,6 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -85,6 +87,10 @@ public class StorageFile {
     private static boolean isValidPath(Path filePath) {
         return filePath.toString().endsWith(".xml");
     }
+    
+    private boolean isFileExists() {
+    	return Files.exists(path, LinkOption.NOFOLLOW_LINKS);
+    }
 
     /**
      * Saves all data to this storage file.
@@ -96,6 +102,11 @@ public class StorageFile {
         /* Note: Note the 'try with resource' statement below.
          * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
          */
+    	
+    	if(!isFileExists()) {
+    		throw new StorageOperationException("File is not detected, it is either moved or deleted.");
+    	}
+    	
         try (final Writer fileWriter =
                      new BufferedWriter(new FileWriter(path.toFile()))) {
 
