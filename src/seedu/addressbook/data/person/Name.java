@@ -65,6 +65,7 @@ public class Name {
      * Two names are considered similar if they are the same
      *                                  or they are the same when ignore case sensitivity
      *                                  or 2 name has subset/superset relationship
+     *                                  or they have the same first 5 characters
      */
      public boolean isSimilar(Name other) {
         if(other == null){
@@ -75,6 +76,8 @@ public class Name {
             }else if(other.toString().equalsIgnoreCase(this.toString())){
                 return true;
             }else if(other.toString().contains(this.toString()) | this.toString().contains(other.toString())){
+                return true;
+            }else if(other.toString().substring(0,5).equals(this.toString().substring(0,5))){
                 return true;
             }
         }
