@@ -79,8 +79,6 @@ public class Name {
                 return true;
             }else if(other.toString().substring(0,5).equals(this.toString().substring(0,5))){
                 return true;
-            }else{
-                return false;
             }
         }
         return false;
