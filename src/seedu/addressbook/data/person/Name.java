@@ -68,7 +68,9 @@ public class Name {
         if(other == null){
             return false;
         }else{
-            
+            if(other.equals(this)){
+                return true;
+            }
         }
         return false;
      }
