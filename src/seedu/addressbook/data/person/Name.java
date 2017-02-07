@@ -70,6 +70,8 @@ public class Name {
         }else{
             if(other.equals(this)){
                 return true;
+            }else if(other.toString().equalsIgnoreCase(this.toString())){
+                return true;
             }
         }
         return false;
